@@ -1,4 +1,4 @@
-name: Events Demo1
+name: Events Demo
 on: 
   pull_request:
     types:
@@ -15,10 +15,40 @@ on:
       - 'feat/**'
       paths-ignore:
         - '.github/workflows/*'
-  jobs:
-    deploy:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Output event data
-          run: echo "${{ toJSON(github.event) }}"
-        - name: Get code
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint code
+        run: npm run lint
+      - name: test code
+        run: npm run test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Get code
+        uses: actions/checkout@v3 
+      - name: Install dependencies
+        run: npm ci
+      - name: build website
+        run: npm run build
+      - name: upload artifacts
+        uses: actions/upload-artifacts@v3
+        with: 
+          name: dist-files
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+     steps:
+       - name: Get build artifacts
+         uses: actions/download-artifact@v3
+         with: 
+           name: dist-files 
+       - name: Deploy
+         run: echo "Deploying"
