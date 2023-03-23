@@ -1,8 +1,18 @@
 name: Deploy website 
 on:
-  push:
+  pull_request:
+    types:
+      - opened
     branches:
       - main
+      - 'dev-*'
+      - 'feat/**'
+    workflow_dispatch:
+    push:
+      branches:
+        - main
+        - 'dev-*'
+        - 'feat/**'
 jobs:
   test:
     runs-on: ubutnu-latest
