@@ -7,12 +7,12 @@ on:
       - main
       - 'dev-*'
       - 'feat/**'
-    workflow_dispatch:
-    push:
-      branches:
-        - main
-        - 'dev-*'
-        - 'feat/**'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'dev-*'
+      - 'feat/**'
 jobs:
   test:
     runs-on: ubutnu-latest
