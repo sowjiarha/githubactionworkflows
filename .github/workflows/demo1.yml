@@ -1,0 +1,54 @@
+name: projectEx
+on: 
+  pull_request:
+    types:
+      - opened
+    branches: 
+      - main
+      - 'dev-*'
+      - 'feat/**'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'dev-*'
+      - 'feat/**'
+      paths-ignore:
+        - '.github/workflows/*'
+  jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps: 
+        - name: Get Code
+          uses: actions/checkout@v3
+        - name: Install nodjs
+          uses: actions/simple-node@v3
+          with: 
+            node-version: 18
+        - name: Install dependencies
+          run: npm ci
+        - name: Lint code
+          run: npm run lint
+        - name: Test code
+          run: npm run test
+      build:
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+          - name: Get code
+            uses: actions/checkout@v3
+          - name: Install dependencies
+            run: npm ci
+          - name: build website
+            run: npm run build 
+              
+      deploy: 
+        needs: build
+        runs-on: ubuntu-latest
+        steps: 
+          - name: Deploy
+            run: echo "deploying"
+
+
+
+
