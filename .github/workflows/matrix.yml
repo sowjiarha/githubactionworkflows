@@ -14,5 +14,9 @@ jobs:
       - name: installnode
         uses: actions/setup-node@v3
         with:
-          node-version = ${{ matrix.node-version }}
+          node-version : ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: npm ci
+      - npm: Build project
+        run: npm run build
         
