@@ -4,6 +4,7 @@ on:
     branches:
       - dev
       - prod
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
