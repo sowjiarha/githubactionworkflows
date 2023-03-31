@@ -1,5 +1,6 @@
 name: Upload Website
 on:
+  pull_request:
   push:
     branches:
       - dev
