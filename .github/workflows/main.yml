@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - dev
-      - prod
-      - main
+      - prod  
 jobs:
   deploy:
     runs-on: ubuntu-18.04
