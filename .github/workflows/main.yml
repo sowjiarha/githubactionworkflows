@@ -17,5 +17,11 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+    - name: copy local folder to public folder
+      run: mkdir public
+      run: cp . public
+      run: cd public
+      run: rm -rf .git
+      run: rm -rf .github
     - name: Deploy static site to s3 Bucket
       run: aws s3 sync . s3://webamarahost
