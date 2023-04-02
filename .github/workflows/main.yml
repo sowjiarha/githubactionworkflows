@@ -21,6 +21,7 @@ jobs:
     - name: Deploy static site to s3 Bucket for Dev
       run: aws s3 sync . s3://webamarahost --exclude '*.git/*'
   deploy_prod:
+    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/prod' 
     steps:
     - name: Checkout
