@@ -1,9 +1,9 @@
 name: Upload Website
 on:
   pull_request:
-     types: [closed]
-     branches:
-       - prod
+    types: [closed]
+    branches:
+      - prod
 jobs:   
   deploy_prod:
     runs-on: ubuntu-latest 
