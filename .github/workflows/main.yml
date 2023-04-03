@@ -1,10 +1,10 @@
 name: Upload Website
 on:
   pull_request:
-  push:
-    branches:
-      - dev
-      - prod  
+     types: [closed]
+     branches:
+       - dev
+       - prod  
 jobs:
   deploy_dev:
     runs-on: ubuntu-latest
