@@ -3,7 +3,7 @@ on:
   pull_request:
      types: [closed]
      branches:
-       - dev
+       - prod
 jobs:
   deploy_dev:
     runs-on: ubuntu-latest
@@ -17,5 +17,5 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Deploy static site to s3 Bucket for Dev
-        run: aws s3 sync . s3://webamarahost --exclude '*.git/*'
+        run: aws s3 sync . s3://webamarahostprod --exclude '*.git/*'
   
