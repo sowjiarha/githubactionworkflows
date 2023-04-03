@@ -3,26 +3,10 @@ on:
   pull_request:
      types: [closed]
      branches:
-       - dev
-       - prod  
-jobs:
-  deploy_dev:
-    runs-on: ubuntu-latest
-    if: github.ref == github.event.pull_request.merged && github.event.pull_request.base.ref == 'dev' && github.event.pull_request.head.ref == 'prod'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: configure AWS Crendentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Deploy static site to s3 Bucket for Dev
-        run: aws s3 sync . s3://webamarahost --exclude '*.git/*'
+       - prod
+jobs:   
   deploy_prod:
-    runs-on: ubuntu-latest
-    if: github.ref == github.event.pull_request.merged && github.event.pull_request.base.ref == 'prod' && github.event.pull_request.head.ref == 'dev' 
+    runs-on: ubuntu-latest 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
