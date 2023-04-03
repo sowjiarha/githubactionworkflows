@@ -1,21 +1,37 @@
 name: Upload Website
 on:
   pull_request:
-  push:
+    types: [closed]
     branches:
+      - prod
       - dev
-      - prod  
-jobs:
-  deploy:
-    runs-on: ubuntu-18.04
+jobs: 
+  deploy_dev:
+    runs-on: ubuntu-latest 
+    if: github.ref == 'refs/heads/dev'
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: configure AWS Crendentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-    - name: Deploy static site to s3 Bucket
-      run: aws s3 sync . s3://webamarahost --exclude '*.git/*'
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: configure AWS Crendentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Deploy static site to s3 bucket for dev
+        run: aws s3 sync . s3://webamarahost --exclude '*.git/*'
+
+  deploy_prod:
+    runs-on: ubuntu-latest 
+    if: github.ref == 'refs/heads/prod'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: configure AWS Crendentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Deploy static site to s3 bucket for prod
+        run: aws s3 sync . s3://webamarahostprod --exclude '*.git/*'
