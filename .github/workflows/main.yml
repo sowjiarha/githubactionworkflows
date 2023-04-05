@@ -24,7 +24,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_API_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_API_SECRET_KEY}}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      - name: Deploy static site to s3 Bucket for Dev
+      - name: Deploy static site to s3 Bucket for Devv
         run: aws s3 sync . s3://${{ env.S3_BUCKET_NAME }} --exclude '*.git/*' --delete
   deploy_prod:
     runs-on: ubuntu-latest
