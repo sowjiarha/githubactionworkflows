@@ -12,7 +12,7 @@ jobs:
     environment: dev
     env:
       AWS_DEFAULT_REGION: us-east-1
-      S3_BUCKET_NAME: amarawebhost
+      S3_BUCKET_NAME: webamarahost
       DISTRIBUTION_ID: E2JGI46IU6APGK
     if: ((startsWith(github.ref_name, 'dev') || (startsWith(github.ref_name, 'revert-'))) && github.event_name == 'push')
     steps:
