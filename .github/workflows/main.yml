@@ -44,4 +44,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_API_SECRET_KEY}}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
       - name: Deploy static site to s3 Bucket for Prod
-        run: aws s3 sync . s3://webamarahostprod --exclude '*.git/*'
+        run: aws s3 sync . s3://${{ env.S3_BUCKET_NAME }} --exclude '*.git/*'
