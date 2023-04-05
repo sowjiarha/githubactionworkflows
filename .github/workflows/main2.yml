@@ -23,6 +23,7 @@ jobs:
     needs: configure_env
     if: ((startsWith(github.ref_name, 'prod') || (startsWith(github.ref_name, 'revert-'))) && github.event_name == 'push')
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
