@@ -22,5 +22,3 @@ jobs:
       - name: Deploy to s3
         if: ((starsWith(github.ref_name, 'dev') || (startsWith(github.ref_name, 'revert-'))) && github.event_name == 'push')
         run: aws s3 sync . s3://webamarahost --exclude '*.git/*' --delete
-        if: ((starsWith(github.ref_name, 'prod') || (startsWith(github.ref_name, 'revert-'))) && github.event_name == 'push')
-        run: aws s3 sync . s3://webamarahostprod --exclude '*.git/*' --delete
