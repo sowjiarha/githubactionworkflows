@@ -6,9 +6,8 @@ on:
       - prod
       - dev
 jobs: 
-  deploy_dev:
+  dev:
     runs-on: ubuntu-latest 
-    if: github.ref == 'refs/heads/dev'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -21,7 +20,7 @@ jobs:
       - name: Deploy static site to s3 bucket for dev
         run: aws s3 sync . s3://webamarahost --exclude '*.git/*'
 
-  deploy_prod:
+  prod:
     runs-on: ubuntu-latest 
     if: github.ref == 'refs/heads/prod'
     steps:
