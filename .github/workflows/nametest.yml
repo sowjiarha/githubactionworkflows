@@ -1,4 +1,4 @@
-name: Upload Website
+name: nametest
 on:
   push:
     branches:
