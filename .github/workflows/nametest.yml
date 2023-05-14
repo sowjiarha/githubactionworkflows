@@ -1,0 +1,47 @@
+name: Upload Website
+on:
+  push:
+    branches:
+      - dev
+      - prod
+      - revert-*-dev
+      - revert-*-prod
+jobs:
+  dev:
+    runs-on: ubuntu-latest
+    environment: dev
+    env:
+      AWS_DEFAULT_REGION: us-east-1
+      S3_BUCKET_NAME: webamarahost
+      DISTRIBUTION_ID: E2JGI46IU6APGK
+    if: ((startsWith(github.ref_name, 'dev') || (startsWith(github.ref_name, 'revert-'))) && github.event_name == 'push')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: configure AWS Crendentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_API_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_API_SECRET_KEY}}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: Deploy static site to s3 Bucket for Devv
+        run: aws s3 sync . s3://${{ env.S3_BUCKET_NAME }} --exclude '*.git/*' --delete
+  prod:
+    runs-on: ubuntu-latest
+    environment: dev
+    env:
+      AWS_DEFAULT_REGION: us-east-1
+      S3_BUCKET_NAME: webamarahostprod 
+      DISTRIBUTION_ID: E2JGI46IU6APGK
+    if: ((startsWith(github.ref_name, 'prod') || (startsWith(github.ref_name, 'revert-'))) && github.event_name == 'push')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: configure AWS Crendentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_API_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_API_SECRET_KEY}}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: Deploy static site to s3 Bucket for Prod
+        run: aws s3 sync . s3://${{ env.S3_BUCKET_NAME }} --exclude '*.git/*'
